@@ -1,6 +1,6 @@
 # PDF ELIXIR
 Despite of the mode of the learning, whether it's offline/online, PDFs are an integral part of a college student's life.  
-**PDF ELIXIR** is a web-app to deal with PDFs.Some of it's features could be as follows:
+**PDF ELIXIR** is a web-app to deal with PDFs.Some of it's features are as follows:
 - Images to PDF Conversion 
 - Snapshot of a particular part of the PDF, like drag & snap
 - Joining 2 PDFs as a single PDF, in a contiguous as well as custom order
