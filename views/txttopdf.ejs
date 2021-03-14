@@ -1,0 +1,102 @@
+<%-include('./partials/head'); %>
+<body>
+  <%-include('./partials/navbar'); %>
+
+      <div class="container">
+          <h1 class="text-center">
+              Plain TXT to PDF File Converter
+          </h1>
+            <form id="form">
+            <div class="form-group">
+                <input class="form-control" type="file" accept=".txt" name="file" id="file" required>
+            </div>
+            <div class="form-group">
+		<label for="name">Name of PDF File:</label>
+		 <input class="form-control" type="text" name="file" value="sample" id="name" required>
+	    </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-danger">
+                    Download PDF File
+                </button>
+            </div>
+            </form>
+        <br><br>
+        <%-include('./partials/services');%>
+        <%-include('./partials/jumbotron');%>
+      </div>
+</body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="	https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+  <script>
+   var fr,pdf,textpdf,parts,outStr=""
+  
+   $("#file").on("change",function(e){
+      
+       fr=new FileReader();
+       pdf = new jsPDF();
+       pdf.setFont("courier");
+pdf.setFontType("normal");
+       pdf.setFontSize(14)
+       fr.onload=function(){ 
+             
+             textpdf = fr.result
+             console.log(fr.result)
+             
+       } 
+
+       fr.readAsText(this.files[0]);
+	
+   })
+
+   $("#form").submit(function(e){
+
+	e.preventDefault()
+        
+
+        parts = textpdf.split(' ')
+
+        for (var i = 0; i < parts.length; i++) {
+  outStr += ' ' + parts[i];
+  
+  //every tenth word, add a new-line. Change this to '<br/>' if you want html.
+  if ((i + 1) % 10 === 0) {
+    outStr += "\n";
+  }
+}
+
+console.log(outStr)
+
+var lines = outStr.split("\n");  
+console.log(lines.length)
+var flag = 0
+
+for(var i=0;i<lines.length;i++){
+
+  if(i==0){
+
+  if((i+1) % 25 == 0){
+   pdf.addPage()
+  }
+  }else{
+    if(i%25==0){
+     pdf.addPage()
+     flag=0
+    }
+   }
+
+  if(i==0){
+   pdf.text(lines[i],10,10)
+  }else{
+
+  pdf.text(lines[i],10,10*flag)
+  
+  }
+
+  flag = flag + 1
+
+}
+       
+        pdf.save($("#name").val() + ".pdf")
+    })
+  </script>
+</html>
